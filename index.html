@@ -2,83 +2,102 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>REACT TROLL SITE</title>
+    <title>IMAGE HELL</title>
     <style>
-        body { 
-            margin: 0; height: 100vh; 
-            background: linear-gradient(45deg, #ff0000, #0000ff);
-            display: flex; flex-direction: column; 
+        body {
+            margin: 0; height: 100vh;
+            background: radial-gradient(circle, #ff0000, #000);
+            display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            font-family: Arial, sans-serif; color: white;
+            font-family: monospace; color: #fff; text-align: center;
         }
-        .bait-link {
-            display: block; font-size: 2.5rem; 
-            padding: 20px 40px; margin: 20px;
-            background: #ff4444; color: white; text-decoration: none;
-            border-radius: 50px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: all 0.3s; font-weight: bold;
+        .launch {
+            font-size: 3rem; padding: 30px 60px;
+            background: #f00; color: #fff; border: none;
+            border-radius: 50px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 20px 40px rgba(255,0,0,0.6);
+            transition: all 0.3s;
         }
-        .bait-link:hover {
-            transform: scale(1.1); background: #ff0000;
-            box-shadow: 0 20px 50px rgba(255,0,0,0.8);
+        .launch:hover { 
+            transform: scale(1.1); background: #ff4400;
+            box-shadow: 0 30px 60px rgba(255,68,0,0.8);
+        }
+        .warning {
+            font-size: 1.5rem; margin-bottom: 30px;
+            color: #ffff00; text-shadow: 0 0 20px #ffff00;
         }
     </style>
 </head>
 <body>
-    <div style="text-align:center;">
-        <h1 style="font-size:3rem;margin-bottom:50px;">😈 CLICK BAIT HELL 😈</h1>
-        <a href="#" class="bait-link" data-tabs="25">🆓 FREE ROBUX NOW</a>
-        <a href="#" class="bait-link" data-tabs="50">💎 YOUR NFT AIRDROP</a>
-        <a href="#" class="bait-link" data-tabs="100">🚀 MAXIMUM CHAOS MODE</a>
-        <a href="#" class="bait-link" data-tabs="10">📱 QUICK TEST</a>
-    </div>
+    <div class="warning">⚠️ CLICK FOR 100 TABS OF IMAGE HELL ⚠️</div>
+    <button class="launch" onclick="spamTabs(100)">LAUNCH IMAGE HELL</button>
 
     <script>
-        const chaosImages = Array(100).fill('https://picsum.photos/420/300?random=666');
+        // FIXED IMAGE - Direct Imgur + fallback (your original + mirror)
+        const hellImage = 'https://i.imgur.com/yxRUesp.webp'; // Removed _d (404 fix)
+        const fallbackImage = 'https://picsum.photos/420/300?random=hell420';
         
-        document.querySelectorAll('.bait-link').forEach((link, index) => {
-            link.onclick = (e) => {
-                e.preventDefault();
-                const tabCount = parseInt(link.dataset.tabs);
-                link.style.background = '#00ff00';
-                link.textContent = `💥 ${tabCount} TABS DEPLOYED 💥`;
-                setTimeout(() => deployTabs(tabCount), 800);
-            };
-        });
-
-        function deployTabs(count) {
+        function spamTabs(count) {
+            document.querySelector('.launch').textContent = 'HELL ACTIVE 💀';
+            document.querySelector('.warning').textContent = '100 TABS DEPLOYING...';
+            
             let opened = 0;
-            function burst() {
-                const thisBurst = Math.min(15, count - opened);
-                for (let i = 0; i < thisBurst; i++) {
+            function burstTabs() {
+                // Chrome/Firefox max: 15 tabs per burst
+                const burstSize = Math.min(15, count - opened);
+                
+                for (let i = 0; i < burstSize; i++) {
                     setTimeout(() => {
                         const tab = window.open('', `hell_${opened}`, 
                             'noopener,noreferrer,width=420,height=300');
-                        if (tab) {
+                        
+                        if (tab && tab.document) {
                             tab.document.write(createHellTab(opened));
                             tab.document.close();
                             opened++;
                         }
-                    }, i * 30);
+                    }, i * 40); // 40ms stagger
                 }
-                if (opened < count) setTimeout(burst, 1200);
+                
+                // Continue if more tabs needed
+                if (opened < count) {
+                    setTimeout(burstTabs, 1500); // 1.5s cooldown
+                } else {
+                    document.querySelector('.warning').textContent = 'HELL COMPLETE 😈';
+                }
             }
-            burst();
+            burstTabs();
         }
 
-        function createHellTab(id) {
+        function createHellTab(tabId) {
             return `
-            <!DOCTYPE html>
-            <html><head><title>HELL TAB ${id}</title>
-            <style>body{margin:0;background:black;}
-            img{width:100vw;height:100vh;object-fit:cover;}</style></head>
-            <body>
-                <img src="${chaosImages[id % chaosImages.length]}" />
-                <script>
-                    window.onbeforeunload=()=>false;
-                    setInterval(()=>window.focus(),1500);
-                </script>
-            </body></html>`;
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HELL TAB ${tabId}</title>
+    <style>
+        *{margin:0;padding:0;overflow:hidden;}
+        body{background:black;}
+        img{
+            width:100vw; height:100vh; 
+            object-fit:cover; image-rendering: pixelated;
+            filter: contrast(1.3) saturate(1.2);
+        }
+    </style>
+</head>
+<body>
+    <img src="${hellImage}" 
+         onerror="this.src='${fallbackImage}'; this.onerror=null;"
+         loading="eager" />
+    <script>
+        // Anti-close armor
+        window.onbeforeunload = () => false;
+        // Focus wars
+        setInterval(() => window.focus(), 2000);
+        document.title = 'HELL TAB ${tabId}';
+    </script>
+</body>
+</html>`;
         }
     </script>
 </body>
