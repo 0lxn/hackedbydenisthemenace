@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUR IMAGE APOCALYPSE</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            height: 100vh; background: linear-gradient(45deg, #ff0066, #6600ff);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            font-family: 'Courier New', monospace; overflow: hidden;
+        }
+        .troll-btn {
+            font-size: 4rem; padding: 2rem 4rem; background: #000; color: #ff00ff;
+            border: 5px solid #ff00ff; border-radius: 50px; cursor: pointer; text-transform: uppercase;
+            box-shadow: 0 0 50px rgba(255,0,255,0.8); transition: all 0.3s;
+            animation: glitch 0.2s infinite;
+        }
+        .troll-btn:hover { 
+            transform: scale(1.15); background: #ff00ff; color: #000; 
+            box-shadow: 0 0 100px #ffff00; 
+        }
+        .warning { 
+            font-size: 2.2rem; color: #ffff00; margin-bottom: 2rem; 
+            text-align: center; font-weight: bold; text-shadow: 0 0 20px #ffff00;
+        }
+        .countdown { 
+            font-size: 10rem; color: #00ff00; margin: 1rem 0; 
+            text-shadow: 0 0 30px #00ff00; 
+        }
+        @keyframes glitch {
+            0%,100%{transform:translate(0);} 
+            20%{transform:translate(-3px,3px);} 
+            40%{transform:translate(-3px,-3px);}
+            60%{transform:translate(3px,3px);} 
+            80%{transform:translate(3px,-3px);}
+        }
+    </style>
+</head>
+<body>
+    <div class="warning">⚠️ YOUR IMAGE x100 TABS INCOMING ⚠️<br><small>https://imgur.com/a/SoK57xx</small></div>
+    <div class="countdown" id="countdown">3</div>
+    <button class="troll-btn" onclick="launchApocalypse()">💥 SPAM MY IMAGE 100x 💥</button>
+
+    <script>
+        let countdown = 3;
+        const cd = document.getElementById('countdown');
+        
+        // YOUR IMAGE - 100 COPIES (Method: Nuclear Spam)
+        const yourImage = 'https://i.imgur.com/yxRUesp_d.webp';
+        const chaosImages = Array(100).fill(yourImage);
+
+        function launchApocalypse() {
+            document.querySelector('.troll-btn').textContent = 'APOCALYPSE ACTIVE 🔥';
+            document.querySelector('.warning').innerHTML = '💀 <strong>100 TABS OF YOUR IMAGE</strong> 💀';
+            
+            const interval = setInterval(() => {
+                cd.textContent = countdown--;
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    deployTabs(100);
+                }
+            }, 500);
+        }
+
+        function deployTabs(count) {
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const tab = window.open('', `tab_${i}`, 'noopener,noreferrer,width=420,height=300,scrollbars=no');
+                    if (tab) {
+                        tab.document.write(createChaosTab(i));
+                        tab.document.close();
+                    }
+                }, i * 25); // Ultra-fast 25ms stagger = MAX CHAOS
+            }
+        }
+
+        function createChaosTab(tabId) {
+            return `
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YOUR IMAGE #${tabId} 💀</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{background:#000;color:#f00;font-family:monospace;overflow:hidden;}
+        .chaos-img{width:100vw;height:100vh;object-fit:cover;filter:contrast(120%) saturate(150%);}
+        .overlay{
+            position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            font-size:2.5rem;font-weight:bold;color:#ff00ff;text-shadow:0 0 20px #ff00ff;
+        }
+        @keyframes shake{
+            0%,100%{transform:translateX(0) rotate(0deg);}
+            25%{transform:translateX(-8px) rotate(-1deg);}
+            50%{transform:translateX(8px) rotate(1deg);}
+            75%{transform:translateX(-4px) rotate(-0.5deg);}
+        }
+        .overlay{animation:shake 0.15s infinite;}
+    </style>
+</head>
+<body>
+    <img class="chaos-img" src="${chaosImages[tabId]}" loading="eager" alt="YOUR IMAGE">
+    <div class="overlay">
+        TAB ${tabId}<br>
+        <small>YOU CANNOT ESCAPE</small>
+    </div>
+    <script>
+        // Nuclear anti-close
+        window.onbeforeunload = ()=>false;
+        window.onfocus = ()=>document.title = 'CAUGHT 🕸️';
+        // Mobile vibration hell
+        if(navigator.vibrate) setInterval(()=>navigator.vibrate([100,50,100]),1500);
+        // Steal focus every second
+        setInterval(()=>window.focus(),1000);
+    </script>
+</body>
+</html>`;
+        }
+    </script>
+</body>
+</html>
